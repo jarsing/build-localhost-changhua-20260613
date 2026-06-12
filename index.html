@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
   <meta name="googlebot" content="noindex, nofollow, noarchive, nosnippet">
-  <title>Microsoft Build //localhost:changhua Lab 快速入口</title>
+  <title>Microsoft Build //localhost:changhua LAB501 小抄頁</title>
 
   <style>
     :root {
@@ -16,7 +16,13 @@
       --border: #dddddd;
       --accent: #0078d4;
       --accent-dark: #005a9e;
-      --code-bg: #f0f6ff;
+      --code-bg: #111827;
+      --code-text: #f9fafb;
+      --soft-blue: #f0f6ff;
+      --warning-bg: #fff4ce;
+      --warning-border: #ffcc00;
+      --success: #107c10;
+      --success-dark: #0b5a0b;
     }
 
     * {
@@ -33,7 +39,7 @@
     }
 
     .container {
-      max-width: 880px;
+      max-width: 960px;
       margin: 0 auto;
     }
 
@@ -77,14 +83,19 @@
       font-size: 22px;
     }
 
-    ol {
+    h3 {
+      margin: 20px 0 8px;
+      font-size: 18px;
+    }
+
+    ol, ul {
       padding-left: 24px;
       margin-top: 12px;
       margin-bottom: 0;
     }
 
     li {
-      margin-bottom: 12px;
+      margin-bottom: 10px;
     }
 
     a {
@@ -123,7 +134,7 @@
 
     .training-key {
       flex: 1 1 420px;
-      background: var(--code-bg);
+      background: var(--soft-blue);
       border: 1px solid #b8d8ff;
       border-radius: 14px;
       padding: 14px 16px;
@@ -136,7 +147,7 @@
     button {
       border: 0;
       border-radius: 14px;
-      background: #107c10;
+      background: var(--success);
       color: white;
       padding: 12px 18px;
       font-size: 16px;
@@ -145,7 +156,11 @@
     }
 
     button:hover {
-      background: #0b5a0b;
+      background: var(--success-dark);
+    }
+
+    .copy-button {
+      margin-top: 10px;
     }
 
     .note {
@@ -155,11 +170,52 @@
     }
 
     .warning {
-      background: #fff4ce;
-      border: 1px solid #ffcc00;
+      background: var(--warning-bg);
+      border: 1px solid var(--warning-border);
       border-radius: 14px;
       padding: 14px 16px;
       margin-top: 12px;
+    }
+
+    .info {
+      background: var(--soft-blue);
+      border: 1px solid #b8d8ff;
+      border-radius: 14px;
+      padding: 14px 16px;
+      margin-top: 12px;
+    }
+
+    pre {
+      background: var(--code-bg);
+      color: var(--code-text);
+      border-radius: 14px;
+      padding: 16px;
+      overflow-x: auto;
+      white-space: pre-wrap;
+      word-break: break-word;
+      font-size: 15px;
+      line-height: 1.5;
+      margin: 12px 0 0;
+    }
+
+    code {
+      font-family: Consolas, Monaco, "Courier New", monospace;
+    }
+
+    pre code {
+      color: var(--code-text);
+    }
+
+    .tw-explain {
+      background: #fafafa;
+      border: 1px dashed #cccccc;
+      border-radius: 14px;
+      padding: 16px;
+      margin-top: 14px;
+    }
+
+    .tw-explain h3 {
+      margin-top: 0;
     }
 
     .footer {
@@ -207,7 +263,7 @@
     </section>
 
     <section class="card">
-      <h2>Lab 快速操作步驟</h2>
+      <h2>Lab 快速入口</h2>
       <ol>
         <li>
           開啟 Skillable 平台：<br>
@@ -261,17 +317,228 @@
     <section class="card">
       <h2>今天的 Lab 目標</h2>
       <p>
-        我們會體驗 LAB501 的核心流程：Skillable → Copilot CLI → Azure Skills → Starter App deployment flow。
+        今天會體驗 LAB501 的核心流程：
       </p>
       <p>
-        今天的目標不是強迫每個人都完整跑完 75 分鐘官方 Lab，而是理解 AI agents 如何協助開發者準備、驗證並部署 Azure 應用程式。
+        <strong>Skillable → PowerShell → Copilot CLI → Azure Skills → Starter App → Azure deployment flow</strong>
+      </p>
+      <p>
+        目標不是強迫每個人都完整跑完官方 75 分鐘 Lab，而是理解 AI agents 如何協助開發者準備、驗證並部署 Azure 應用程式。
+      </p>
+      <div class="info">
+        如果完整部署 LEGO 網站需要較久時間，請不要焦慮。今天重點是看懂 AI Agent 如何工作。
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>重要提醒：請使用 PowerShell</h2>
+      <p>
+        請打開 <strong>Windows PowerShell</strong>，不是 Command Prompt。
+      </p>
+      <p>
+        看到提示符號前面有 <code>PS</code> 就對了，例如：
+      </p>
+      <pre><code>PS C:\Users\...</code></pre>
+      <p class="note">
+        Docker Desktop 只要在背景啟動即可，主要指令請在 PowerShell 裡操作。
+      </p>
+    </section>
+
+    <section class="card">
+      <h2>Checkpoint 1：啟動 Copilot CLI + Azure Skills</h2>
+      <p>
+        請在 <strong>Windows PowerShell</strong> 依序貼上或輸入以下指令。
+      </p>
+
+      <h3>1. 登入 Azure CLI</h3>
+      <pre id="cmd-az-login"><code>az login</code></pre>
+      <button class="copy-button" type="button" onclick="copyBlock('cmd-az-login')">複製這段指令</button>
+      <p class="note">
+        請使用 Skillable Resources 分頁提供的 Work or school account 登入，不要使用私人 Microsoft 帳戶。
+      </p>
+
+      <h3>2. 登入 Azure Developer CLI</h3>
+      <pre id="cmd-azd-login"><code>azd auth login</code></pre>
+      <button class="copy-button" type="button" onclick="copyBlock('cmd-azd-login')">複製這段指令</button>
+
+      <h3>3. 開啟 GitHub SSO</h3>
+      <a class="button" href="https://github.com/enterprises/skillable-events/sso" target="_blank" rel="noopener noreferrer">
+        開啟 GitHub SSO
+      </a>
+
+      <h3>4. 啟動 Copilot CLI</h3>
+      <pre id="cmd-copilot"><code>copilot</code></pre>
+      <button class="copy-button" type="button" onclick="copyBlock('cmd-copilot')">複製這段指令</button>
+
+      <h3>5. 在 Copilot CLI 裡登入 GitHub</h3>
+      <pre id="cmd-copilot-login"><code>/login</code></pre>
+      <button class="copy-button" type="button" onclick="copyBlock('cmd-copilot-login')">複製這段指令</button>
+
+      <h3>6. 依官方 Lab 指示關閉 Rubberduck Agent</h3>
+      <pre id="cmd-rubberduck"><code>Update the settings.json for Copilot CLI to disable rubber duck with this, "builtInAgents": {"rubberDuck": false},</code></pre>
+      <button class="copy-button" type="button" onclick="copyBlock('cmd-rubberduck')">複製這段 Prompt</button>
+      <p class="note">
+        Rubberduck Agent 不是本 Lab 的主角；這一步只是依官方 Lab 指示關閉不需要的內建 agent，避免干擾 Azure Skills 流程。
+      </p>
+
+      <h3>7. 安裝 Azure Skills Plugin</h3>
+      <pre id="cmd-plugin"><code>/plugin marketplace add microsoft/azure-skills
+/plugin install azure@azure-skills
+/mcp reload</code></pre>
+      <button class="copy-button" type="button" onclick="copyBlock('cmd-plugin')">複製這段指令</button>
+
+      <div class="warning">
+        完成 <code>/mcp reload</code> 後，請關閉 PowerShell，重新開啟 PowerShell，再繼續下一個 Checkpoint。
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>Checkpoint 2：取得 LAB501 Starter App</h2>
+      <p>
+        重新開啟 Windows PowerShell 後，貼上以下指令：
+      </p>
+
+      <pre id="cmd-starter"><code>git clone https://github.com/microsoft/Build26-LAB501.git
+cd Build26-LAB501
+Copy-Item -Recurse src lego-set-browser
+cd lego-set-browser
+git config --global user.name "Jia-Sin Chen"
+git config --global user.email "jarsing@gmail.com"
+git init
+git add -A
+git commit -m "init"</code></pre>
+      <button class="copy-button" type="button" onclick="copyBlock('cmd-starter')">複製這段指令</button>
+
+      <p class="note">
+        Starter App 是官方準備好的 Python Flask LEGO set browser。今天重點不是從零寫網站，而是看 AI Agent 如何協助部署。
+      </p>
+    </section>
+
+    <section class="card">
+      <h2>Checkpoint 3：啟動 Copilot YOLO 模式</h2>
+      <p>
+        確認你目前在 <code>lego-set-browser</code> 資料夾裡，然後輸入：
+      </p>
+
+      <pre id="cmd-yolo"><code>copilot --yolo</code></pre>
+      <button class="copy-button" type="button" onclick="copyBlock('cmd-yolo')">複製這段指令</button>
+
+      <div class="info">
+        YOLO = You Only Live Once。  
+        在 CLI / Agent 工具裡，通常代表「少問確認，直接執行」。  
+        因為這是在 Skillable sandbox Lab 環境中，不是在正式 production 環境，所以可以節省現場時間。
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>Checkpoint 4：官方核心 Prompt</h2>
+      <p>
+        請在 Copilot CLI 裡貼上以下官方 Prompt。這會觸發 Azure Skills 的核心流程：
+      </p>
+      <p>
+        <strong>azure-prepare → azure-validate → azure-deploy</strong>
+      </p>
+
+      <pre id="cmd-core-prompt"><code>Create and deploy 2 Azure services
+
+ **Environment:**
+ - Subscription: Current subscription
+ - Create a new resource group: rg-lego-set-browser-dev
+ - Region: West US 3
+ **Existing Cosmos DB (do NOT create a new one):**
+ - Look for the existing cosmos DB in the current subscription
+ - Database: LegoDatabase / Container: legoSets
+ **1. Python Azure Function App** — HTTP POST trigger on Flex Consumption (FC1):
+ - Accepts JSON array of LEGO sets; batch-upserts to Cosmos DB above
+ - Fields: set_number (→ id), name, theme_name, year_released, number_of_parts, type, image_url
+ - User-assigned managed identity for Cosmos DB (Built-in Data Contributor)
+ **2. Flask app in this folder → Azure Container Apps:**
+ - Name: ca-web-lego-changhua
+ - Already uses DefaultAzureCredential + env vars COSMOS_ENDPOINT, COSMOS_DATABASE, COSMOS_CONTAINER
+ - System-assigned managed identity for Cosmos DB (Built-in Data Reader)</code></pre>
+      <button class="copy-button" type="button" onclick="copyBlock('cmd-core-prompt')">複製官方 Prompt</button>
+
+      <div class="tw-explain">
+        <h3>這段 Prompt 在做什麼？</h3>
+        <p>
+          這段 Prompt 會請 Copilot CLI 搭配 Azure Skills 建立並部署兩個 Azure 服務：
+        </p>
+        <ul>
+          <li>
+            <strong>Python Azure Function App</strong>：接收 LEGO sets 的 JSON 資料，並寫入 Cosmos DB。
+          </li>
+          <li>
+            <strong>Flask App → Azure Container Apps</strong>：把目前資料夾裡的 Python Flask LEGO set browser 部署成雲端網站。
+          </li>
+        </ul>
+        <p>
+          它會使用既有的 <strong>Cosmos DB</strong>，資料庫是 <code>LegoDatabase</code>，容器是 <code>legoSets</code>，不會建立新的 Cosmos DB。
+        </p>
+        <p>
+          官方 Lab 的重點是觀察 AI Agent 如何依序觸發三個 Azure Skills：
+          <strong>azure-prepare</strong>、<strong>azure-validate</strong>、<strong>azure-deploy</strong>。
+        </p>
+      </div>
+
+      <div class="warning">
+        完整部署可能需要 20 分鐘以上。現場重點是觀察 AI Agent 如何準備、驗證與部署，不一定要等待每個人都完整部署成功。
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>三個 Azure Skills 在做什麼？</h2>
+      <ul>
+        <li>
+          <strong>azure-prepare</strong>：讀懂專案，產生 <code>azure.yaml</code>、<code>infra/</code>、Bicep、Function code 等部署準備。
+        </li>
+        <li>
+          <strong>azure-validate</strong>：部署前檢查，例如 Bicep、Docker、Python runtime、subscription access 等。
+        </li>
+        <li>
+          <strong>azure-deploy</strong>：執行部署流程，通常會跑 <code>azd up --no-prompt</code>，建立 Azure 資源並部署服務。
+        </li>
+      </ul>
+      <p class="note">
+        這三個不是我們手動輸入的 PowerShell 指令，而是 Azure Skills Plugin 裡的官方 skill chain。
+      </p>
+    </section>
+
+    <section class="card">
+      <h2>Cosmos DB 是什麼？</h2>
+      <p>
+        Cosmos DB 是 Azure 的雲端資料庫服務。
+      </p>
+      <p>
+        在 LAB501 裡，LEGO set browser 的資料不是寫死在網頁裡，而是存在 Cosmos DB 裡。Flask 網站負責查詢與顯示資料，Azure Function 負責把 LEGO sets 寫入資料庫。
+      </p>
+    </section>
+
+    <section class="card">
+      <h2>LEGO Browser 推薦搜尋關鍵字</h2>
+      <p>
+        如果 LEGO 網站部署成功，可以試著搜尋這些關鍵字：
+      </p>
+
+      <pre id="cmd-search-keywords"><code>car
+train
+city
+space
+technic
+castle
+dragon
+star
+robot</code></pre>
+      <button class="copy-button" type="button" onclick="copyBlock('cmd-search-keywords')">複製搜尋關鍵字</button>
+
+      <p class="note">
+        在彰化可以先試試 <code>train</code>，呼應彰化扇形車庫與鐵道意象；你也可以試試 <code>car</code>，通常比較容易有結果。
       </p>
     </section>
 
     <section class="card">
       <h2>活動後繼續完成完整 LAB501</h2>
       <p>
-        今天現場會帶大家體驗 LAB501 的核心流程。若你想繼續完成官方完整 75 分鐘 Lab，可以參考 Microsoft 官方 GitHub Repo：
+        今天現場只會帶大家體驗 LAB501 的核心流程。若你想繼續完成官方完整 75 分鐘 Lab，可以參考 Microsoft 官方 GitHub Repo：
       </p>
       <a class="button" href="https://github.com/microsoft/Build26-LAB501-from-zero-to-deployed-on-azure-with-ai-agents" target="_blank" rel="noopener noreferrer">
         開啟 LAB501 官方 GitHub Repo
@@ -280,11 +547,11 @@
         完整 Lab 內容包含 Starter App 部署、Azure Skills 的 prepare / validate / deploy 流程、Production Review、Troubleshooting 與 KQL 診斷等延伸練習。
       </p>
     </section>
-    
+
     <section class="card">
       <h2>遇到問題不用緊張</h2>
       <p>
-        如果你卡在登入、Training Key、Lab VM 啟動、CLI 或 Azure login，請先跟著投影畫面觀看講者示範。
+        如果你卡在登入、Training Key、Lab VM 啟動、PowerShell、CLI 或 Azure login，請先跟著投影畫面觀看講者示範。
       </p>
       <p>
         本場 Lab 已預留時間協助現場排除問題。
@@ -308,6 +575,20 @@
         })
         .catch(function () {
           status.innerText = '複製失敗，請手動選取上方 Training Key 後複製。';
+        });
+    }
+
+    function copyBlock(elementId)
+    {
+      const element = document.getElementById(elementId);
+      const text = element.innerText.trim();
+
+      navigator.clipboard.writeText(text)
+        .then(function () {
+          alert('已複製，可以貼到 PowerShell 或 Copilot CLI。');
+        })
+        .catch(function () {
+          alert('複製失敗，請手動選取文字後複製。');
         });
     }
   </script>
