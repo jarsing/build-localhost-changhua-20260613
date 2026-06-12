@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
   <meta name="googlebot" content="noindex, nofollow, noarchive, nosnippet">
-  <title>Microsoft Build //localhost:changhua Lab Access</title>
+  <title>Microsoft Build //localhost:changhua Lab 快速入口</title>
 
   <style>
     :root {
@@ -207,22 +207,25 @@
     </section>
 
     <section class="card">
-      <h2>Lab Access Steps</h2>
+      <h2>Lab 快速操作步驟</h2>
       <ol>
         <li>
-          Open Skillable:<br>
+          開啟 Skillable 平台：<br>
           <a class="button" href="https://buildlocalhost.learnondemand.net/" target="_blank" rel="noopener noreferrer">
-            Open Skillable Platform
+            開啟 Skillable Platform
           </a>
         </li>
         <li>
-          Sign in with your <strong>Microsoft Account</strong>.
+          以你的 <strong>Microsoft 帳戶</strong> 登入。
         </li>
         <li>
-          Click <strong>Redeem Training Key</strong> at the top of the page.
+          登入後，點選頁面上方的 <strong>Redeem Training Key</strong>。
         </li>
         <li>
-          Copy and paste the Training Key below.
+          複製下方的 <strong>Training Key</strong>，貼到 Skillable 頁面中。
+        </li>
+        <li>
+          兌換成功後，請依照 Skillable 畫面指示啟動 Lab。
         </li>
       </ol>
     </section>
@@ -232,36 +235,46 @@
 
       <div class="key-box">
         <div id="trainingKey" class="training-key">2D71D706CD143DF4</div>
-        <button type="button" onclick="copyTrainingKey()">Copy Key</button>
+        <button type="button" onclick="copyTrainingKey()">複製 Key</button>
       </div>
 
-      <p id="copyStatus" class="note">Tip: You can also tap or select the key above to copy it manually.</p>
+      <p id="copyStatus" class="note">小提醒：你也可以直接點選或長按上方 Training Key 手動複製。</p>
 
       <div class="warning">
-        This Training Key is for attendees of Microsoft Build //localhost:changhua only.
+        此 Training Key 僅供 Microsoft Build //localhost:changhua 現場參加者使用，請勿公開轉貼。
       </div>
     </section>
 
     <section class="card">
-      <h2>System Test</h2>
+      <h2>系統測試</h2>
       <p>
-        Before launching the lab, you can test whether your computer can access the Skillable lab environment:
+        啟動 Lab 前，可以先測試你的電腦是否能正常開啟 Skillable Lab 環境：
       </p>
       <a class="button" href="https://aka.ms/lodtest" target="_blank" rel="noopener noreferrer">
-        Run Skillable System Test
+        執行 Skillable 系統測試
       </a>
       <p class="note">
-        If your company laptop blocks the lab environment, please follow the instructor demo or try a personal device.
+        如果公司筆電受到防火牆或權限限制，導致 Lab 無法啟動，請先觀看講者示範，或改用個人筆電嘗試。
       </p>
     </section>
 
     <section class="card">
-      <h2>Today’s Goal</h2>
+      <h2>今天的 Lab 目標</h2>
       <p>
-        We will experience the core LAB501 workflow: Skillable → Copilot CLI → Azure Skills → Starter App deployment flow.
+        我們會體驗 LAB501 的核心流程：Skillable → Copilot CLI → Azure Skills → Starter App deployment flow。
       </p>
       <p>
-        The goal is not to force everyone to complete the full 75-minute lab, but to understand how AI agents can help prepare, validate, and deploy an Azure application.
+        今天的目標不是強迫每個人都完整跑完 75 分鐘官方 Lab，而是理解 AI agents 如何協助開發者準備、驗證並部署 Azure 應用程式。
+      </p>
+    </section>
+
+    <section class="card">
+      <h2>遇到問題不用緊張</h2>
+      <p>
+        如果你卡在登入、Training Key、Lab VM 啟動、CLI 或 Azure login，請先跟著投影畫面觀看講者示範。
+      </p>
+      <p>
+        本場 Lab 已預留時間協助現場排除問題。
       </p>
     </section>
 
@@ -278,10 +291,10 @@
 
       navigator.clipboard.writeText(key)
         .then(function () {
-          status.innerText = 'Training Key copied. Please paste it into Skillable.';
+          status.innerText = 'Training Key 已複製，請貼到 Skillable 的 Redeem Training Key 欄位。';
         })
         .catch(function () {
-          status.innerText = 'Copy failed. Please select the Training Key manually.';
+          status.innerText = '複製失敗，請手動選取上方 Training Key 後複製。';
         });
     }
   </script>
