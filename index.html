@@ -218,6 +218,34 @@
       margin-top: 0;
     }
 
+    .image-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 18px;
+      margin-top: 16px;
+    }
+
+    figure {
+      margin: 0;
+      background: #fafafa;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 12px;
+    }
+
+    figure img {
+      width: 100%;
+      display: block;
+      border-radius: 12px;
+      border: 1px solid #e5e5e5;
+    }
+
+    figcaption {
+      color: var(--muted);
+      font-size: 15px;
+      margin-top: 10px;
+    }
+
     .footer {
       color: var(--muted);
       font-size: 14px;
@@ -290,7 +318,7 @@
       <h2>Training Key</h2>
 
       <div class="key-box">
-        <div id="trainingKey" class="training-key">2D71D706CD143DF4</div>
+        <div id="trainingKey" class="training-key">PASTE-YOUR-TRAINING-KEY-HERE</div>
         <button type="button" onclick="copyTrainingKey()">複製 Key</button>
       </div>
 
@@ -299,19 +327,6 @@
       <div class="warning">
         此 Training Key 僅供 Microsoft Build //localhost:changhua 現場參加者使用，請勿公開轉貼。
       </div>
-    </section>
-
-    <section class="card">
-      <h2>系統測試</h2>
-      <p>
-        啟動 Lab 前，可以先測試你的電腦是否能正常開啟 Skillable Lab 環境：
-      </p>
-      <a class="button" href="https://aka.ms/lodtest" target="_blank" rel="noopener noreferrer">
-        執行 Skillable 系統測試
-      </a>
-      <p class="note">
-        如果公司筆電受到防火牆或權限限制，導致 Lab 無法啟動，請先觀看講者示範，或改用個人筆電嘗試。
-      </p>
     </section>
 
     <section class="card">
@@ -347,8 +362,14 @@
     <section class="card">
       <h2>Checkpoint 1：啟動 Copilot CLI + Azure Skills</h2>
       <p>
-        請在 <strong>Windows PowerShell</strong> 依序貼上或輸入以下指令。
+        這個 Checkpoint 會完成 Copilot CLI 與 Azure Skills 的基礎環境設定。看起來步驟很多，但其實是在完成四件事：
       </p>
+      <ol>
+        <li><strong>Azure CLI 登入</strong>：讓 <code>az</code> 可以操作 Azure。</li>
+        <li><strong>Azure Developer CLI 登入</strong>：讓 <code>azd</code> 可以執行 app deployment flow。</li>
+        <li><strong>GitHub SSO 登入</strong>：讓 Skillable lab 的 GitHub / Copilot 權限正常運作。</li>
+        <li><strong>Copilot CLI 登入</strong>：讓你可以在 terminal 裡使用 Copilot CLI 與 Azure Skills。</li>
+      </ol>
 
       <h3>1. 登入 Azure CLI</h3>
       <pre id="cmd-az-login"><code>az login</code></pre>
@@ -361,10 +382,15 @@
       <pre id="cmd-azd-login"><code>azd auth login</code></pre>
       <button class="copy-button" type="button" onclick="copyBlock('cmd-azd-login')">複製這段指令</button>
 
-      <h3>3. 開啟 GitHub SSO</h3>
-      <a class="button" href="https://github.com/enterprises/skillable-events/sso" target="_blank" rel="noopener noreferrer">
-        開啟 GitHub SSO
-      </a>
+      <h3>3. 複製 GitHub SSO 網址，到 Skillable VM 裡開啟</h3>
+      <p>
+        請先複製下方網址，然後切回 <strong>Skillable VM</strong>，在開始列打開 <strong>Edge 瀏覽器</strong>，貼上網址進行 GitHub SSO。
+      </p>
+      <pre id="cmd-github-sso"><code>https://github.com/enterprises/skillable-events/sso</code></pre>
+      <button class="copy-button" type="button" onclick="copyBlock('cmd-github-sso')">複製 GitHub SSO 網址</button>
+      <p class="note">
+        注意：不要只是在你自己的電腦瀏覽器開這個連結；請到 Skillable VM 裡面的瀏覽器開啟。
+      </p>
 
       <h3>4. 啟動 Copilot CLI</h3>
       <pre id="cmd-copilot"><code>copilot</code></pre>
@@ -382,10 +408,18 @@
       </p>
 
       <h3>7. 安裝 Azure Skills Plugin</h3>
-      <pre id="cmd-plugin"><code>/plugin marketplace add microsoft/azure-skills
-/plugin install azure@azure-skills
-/mcp reload</code></pre>
-      <button class="copy-button" type="button" onclick="copyBlock('cmd-plugin')">複製這段指令</button>
+      <p>
+        Copilot CLI 一次只能執行一個 slash command。請分三次複製、分三次貼上，不要一次貼三行。
+      </p>
+
+      <pre id="cmd-plugin-marketplace"><code>/plugin marketplace add microsoft/azure-skills</code></pre>
+      <button class="copy-button" type="button" onclick="copyBlock('cmd-plugin-marketplace')">複製第 1 個 slash command</button>
+
+      <pre id="cmd-plugin-install"><code>/plugin install azure@azure-skills</code></pre>
+      <button class="copy-button" type="button" onclick="copyBlock('cmd-plugin-install')">複製第 2 個 slash command</button>
+
+      <pre id="cmd-mcp-reload"><code>/mcp reload</code></pre>
+      <button class="copy-button" type="button" onclick="copyBlock('cmd-mcp-reload')">複製第 3 個 slash command</button>
 
       <div class="warning">
         完成 <code>/mcp reload</code> 後，請關閉 PowerShell，重新開啟 PowerShell，再繼續下一個 Checkpoint。
@@ -427,6 +461,11 @@ git commit -m "init"</code></pre>
         YOLO = You Only Live Once。  
         在 CLI / Agent 工具裡，通常代表「少問確認，直接執行」。  
         因為這是在 Skillable sandbox Lab 環境中，不是在正式 production 環境，所以可以節省現場時間。
+      </div>
+
+      <div class="warning">
+        在 YOLO 模式下，多數時候 Copilot CLI 不會一直詢問你，而是會自行執行、遇到錯誤也會嘗試修正。  
+        但遇到建立 Cosmos DB 相關資源、確認部署等關鍵動作時，仍可能跳出詢問。實測過程中可能會詢問約三次，請依畫面指示確認。
       </div>
     </section>
 
@@ -504,6 +543,29 @@ git commit -m "init"</code></pre>
     </section>
 
     <section class="card">
+      <h2>成果畫面：LEGO 網站部署成功</h2>
+      <p>
+        當 Copilot CLI 跑完 Azure Skills 後，會得到一個 endpoint 端點網址。直接點擊該網址，就會打開瀏覽器，看到 Starter App 的 LEGO 網站成果。
+      </p>
+
+      <div class="image-grid">
+        <figure>
+          <img src="lego-home.png" alt="LEGO Vault 首頁畫面">
+          <figcaption>
+            LEGO 首頁：部署成功後，打開 Azure Container Apps endpoint，會看到 LEGO Vault 首頁。
+          </figcaption>
+        </figure>
+
+        <figure>
+          <img src="lego-car.png" alt="搜尋 car 的 LEGO 結果畫面">
+          <figcaption>
+            LEGO 汽車搜尋結果：搜尋 <code>car</code>，可以看到多筆 LEGO 汽車相關套組。
+          </figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section class="card">
       <h2>Cosmos DB 是什麼？</h2>
       <p>
         Cosmos DB 是 Azure 的雲端資料庫服務。
@@ -527,11 +589,16 @@ technic
 castle
 dragon
 star
-robot</code></pre>
+robot
+friends
+animal
+flower
+cafe
+disney</code></pre>
       <button class="copy-button" type="button" onclick="copyBlock('cmd-search-keywords')">複製搜尋關鍵字</button>
 
       <p class="note">
-        在彰化可以先試試 <code>train</code>，呼應彰化扇形車庫與鐵道意象；你也可以試試 <code>car</code>，通常比較容易有結果。
+        可以先試試 <code>car</code>，通常比較容易有結果；在彰化也可以試試 <code>train</code>，呼應彰化扇形車庫與鐵道意象。
       </p>
     </section>
 
@@ -585,7 +652,7 @@ robot</code></pre>
 
       navigator.clipboard.writeText(text)
         .then(function () {
-          alert('已複製，可以貼到 PowerShell 或 Copilot CLI。');
+          alert('已複製，可以貼到 PowerShell、Skillable VM 瀏覽器或 Copilot CLI。');
         })
         .catch(function () {
           alert('複製失敗，請手動選取文字後複製。');
